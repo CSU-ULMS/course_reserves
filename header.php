@@ -10,11 +10,9 @@ date_default_timezone_set('America/Los_Angeles');
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Course Reserves</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css"/>
- 
     <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
     <style type="text/css">
       iframe {width: 100%; max-width: 900px;min-height: 170px;border: 1px solid #ddd;padding: 0 20px;}
@@ -28,13 +26,12 @@ date_default_timezone_set('America/Los_Angeles');
           "order": [[ 0, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]]
         }); 
-        $('#example')
-          .removeClass( 'display' )
-          .addClass('table table-striped table-bordered');
-        } 
-      ); 
+        $("#citationsTable").dataTable({
+          "order": [[ 4, "asc" ], [ 0, "asc" ]],
+          "lengthMenu": [[-1, 25, 50], ["All", 25, 50]]
+        }); 
+      }); 
     </script>
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -55,6 +52,4 @@ date_default_timezone_set('America/Los_Angeles');
         </nav>
         <h3 class="text-muted">Course Reserves</h3>
       </div>
-
       <div class="row">
- 

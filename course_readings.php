@@ -21,27 +21,76 @@ $xml = new SimpleXMLElement($response);
 
 include("header.php");
 
-echo $xml->name . "<br/>\n";
-echo $xml->academic_department . "<br/>\n";
-echo $xml->terms->term[0] . "<br/>\n";
-echo $xml->instructors->instructor[0]->first_name . "<br/>\n";
-echo $xml->instructors->instructor[0]->last_name . "<br/>\n";
+echo "<table class=\"table table-bordered\">\n";
+echo "<tr>\n<th>Course</th>\n<td>\n";
+echo $xml->name . "\n";
+echo "</td>\n<tr>\n";
+echo "<tr>\n<th>Department</th>\n<td>\n";
+echo $xml->academic_department . "\n";
+echo "<tr>\n<th>Term</th>\n<td>\n";
+echo $xml->terms->term[0] . "\n";
+echo "<tr>\n<th>Instructor</th>\n<td>\n";
+echo $xml->instructors->instructor[0]->first_name . " ";
+echo $xml->instructors->instructor[0]->last_name . "\n";
+echo "</td>\n<tr>\n</table>\n";
+
+echo "<div class=\"row\">\n";
+echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th>Title</th>\n";
+echo "<th>Author</th>\n";
+echo "<th>Call Number</th>\n";
+echo "<th>Pages</th>\n";
+echo "<th>Public Note</th>\n";
+echo "<th>Get It!</th>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
 foreach ($xml->xpath('//reading_lists/reading_list') as $reading_list) {
   if ($reading_list->status == "Complete") {
     //print_r($reading_list);
     foreach ($reading_list->xpath('//citations/citation') as $citation) {
       if ($citation->status == "Complete") {
-        echo "<div class=\"row\">\n";
-        echo "<a href=\"" . $citation->open_url . "\">" . $citation->metadata->title ."</a><br/>\n";
-        echo $citation->metadata->author ."<br/>\n";
-        echo $citation->metadata->call_number ."<br/>\n";
+        echo "<tr>\n";
         if ($citation->type == "BK") {
           $genre = "book";
           $resolver_tab = "getit";
-        } elseif ($citation->type == "CR") {
-          $genre = "book";
+        } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
+          $genre = "article";
           $resolver_tab = "viewit";
         }
+        echo "<td>\n";
+        echo "<a href=\"" . $citation->open_url . "\">";
+        if ($citation->type == "BK") {
+          echo $citation->metadata->title;
+        } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
+          echo $citation->metadata->article_title . "\n";
+        }
+        echo "</a>\n";
+        echo "</td>\n";
+        echo "<td>\n";
+        echo $citation->metadata->author . "\n";
+        echo "</td>\n";
+        echo "<td>\n";
+        if ($citation->type == "BK") {
+          echo $citation->metadata->call_number ."\n";
+        }
+        echo "</td>\n";
+        echo "<td>\n";
+        if ($citation->type == "CR" || $citation->type == "E_CR") {
+          echo $citation->metadata->pages . "\n";
+        }
+        echo "</td>\n";
+        echo "<td>\n";
+        if ($citation->public_note == "") {
+          $order = "9999";
+        } else {
+          $order = $citation->public_note ;
+        }
+        echo $order . "\n";
+        echo "</td>\n";
+        echo "<td>\n";
         echo "<iframe src=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
         echo urlencode($citation->metadata->title) . "&rft.genre=";
         echo urlencode($genre) . "&rft.mms_id=";
@@ -50,9 +99,13 @@ foreach ($xml->xpath('//reading_lists/reading_list') as $reading_list) {
         echo urlencode($citation->metadata->title) . "&customer=1670&rft_dat=language=eng,view=cals_usm_services_page&svc_dat=";
         echo $resolver_tab . "&svc.profile=";
         echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\"></iframe>\n";
-        echo "</div>\n";
+        echo "</td>\n";
+        echo "</tr>\n";
       }
     }              
   }
 }
+echo "</tbody>\n";
+echo "</table>\n";
+echo "</div>\n";
 include("footer.php");
