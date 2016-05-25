@@ -20,7 +20,16 @@ curl_close($ch);
 $xml = new SimpleXMLElement($response);
 
 include("header.php");
+echo "<div class=\"col-sm-11 col-sm-offset-1\">\n";
+echo "<div class=\"page-header\">\n";
 echo "<h1 class=\"page-title\">" . $xml->name . "</h1>\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "<div class=\"row\">\n";
+echo "<div class=\"col-sm-3 col-sm-offset-1\">\n";
+echo "<div class=\"panel panel-default\">\n";
+echo "<div class=\"panel-heading\"><h3 class=\"panel-title\">Course Information</h3></div>\n";
 echo "<table class=\"table table-bordered\">\n";
 echo "<tr>\n<th>Instructor</th>\n<td>\n";
 echo $xml->instructors->instructor[0]->first_name . " ";
@@ -41,11 +50,14 @@ echo "<div>End Date: " . $xml->end_date . "</div>\n";
 echo "<div>Code: " . $xml->code . "</div>\n";
 echo "<div>Alma ID: " . $xml->id . "</div>\n";
 echo "</td>\n</tr>\n</table>\n";
-
+echo "</div>\n";
+echo "</div>\n";
+echo "<div class=\"col-sm-8\">\n";
+echo "<div class=\"reading-lists-wrapper\">\n";
 foreach ($xml->reading_lists->children() as $reading_list) {
   if ($reading_list->status['desc'] != "Inactive") {
     echo "<div class=\"row\">\n";
-    echo "<h3>Reading List Information</div>\n";
+    echo "<h3>Reading Lists for this Course</div>\n";
     echo "<div>Name: " . $reading_list->name . "</div>\n";
     echo "<div>Status: " . $reading_list->status['desc'] . "</div>\n";
     echo "<div>Code: " . $reading_list->code . "</div>\n";
@@ -120,4 +132,8 @@ foreach ($xml->reading_lists->children() as $reading_list) {
     echo "</div>\n";
   }
 }
+echo "</div>\n";
+echo "</div>\n";
+echo "</div>\n";
+
 include("footer.php");

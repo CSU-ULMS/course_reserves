@@ -16,6 +16,7 @@ date_default_timezone_set('America/Los_Angeles');
     <style type="text/css">
       iframe {display: none;}
       iframe.visible {display: block; width: 100%; max-height: 100%; min-height: 250px; border: 1px solid #ddd;padding: 0 20px;}
+      .reading-lists-wrapper {margin: 0 7.5% 30px 30px;}
     </style>
     <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -31,7 +32,7 @@ date_default_timezone_set('America/Los_Angeles');
         $("#citationsTable").dataTable({
           "order": [[ 4, "asc" ], [ 0, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
-          "dom": '<"top"ifl>rt<"bottom"p>'
+          "dom": '<"top"pi>rt<"bottom"p>'
         }); 
         $('iframe.visible').iFrameResize({"checkOrigin": false});
         $("a.getinfo").click(function(e) {
@@ -75,5 +76,5 @@ date_default_timezone_set('America/Los_Angeles');
         </div><!-- /.container-fluid -->
       </nav>
     </div>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
