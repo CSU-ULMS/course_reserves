@@ -30,7 +30,7 @@ date_default_timezone_set('America/Los_Angeles');
           "dom": '<"top"lif>rt<"bottom"p>'
         }); 
         $("#citationsTable").dataTable({
-          "order": [[ 4, "asc" ], [ 0, "asc" ]],
+          "order": [[ 0, "asc" ], [ 1, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
           "dom": '<"top"pi>rt<"bottom"p>'
         }); 

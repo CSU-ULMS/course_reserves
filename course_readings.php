@@ -39,9 +39,14 @@ echo "<tr>\n<th>Department</th>\n<td>\n";
 echo $xml->academic_department . "\n";
 echo "</td>\n<tr>\n";
 echo "<tr>\n<th>Terms</th>\n<td>\n";
-foreach ($xml->terms->children() as $term) {
-  echo ucwords(strtolower($term)) . " / \n";
-} echo "</td>\n<tr>\n";
+if (isset($xml->terms)) {
+  foreach ($xml->terms->children() as $term) {
+    echo ucwords(strtolower($term)) . " / \n";
+  } 
+} else {
+  echo "N/A";
+}
+echo "</td>\n<tr>\n";
 echo "<tr>\n<th>Course Details</th>\n<td>\n";
 echo "<div>Status: " . ucfirst(strtolower($xml->status)) . "</div>\n";
 echo "<div>Processing Department: " . $xml->processing_department['desc'] . "</div>\n";
@@ -65,11 +70,11 @@ foreach ($xml->reading_lists->children() as $reading_list) {
     echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
     echo "<thead>\n";
     echo "<tr>\n";
+    echo "<th>Order</th>\n";
     echo "<th>Title</th>\n";
     echo "<th>Author</th>\n";
     echo "<th>Call Number</th>\n";
     echo "<th>Pages</th>\n";
-    echo "<th>Public Note</th>\n";
     echo "</tr>\n";
     echo "</thead>\n";
     echo "<tbody>\n";
@@ -85,6 +90,14 @@ foreach ($xml->reading_lists->children() as $reading_list) {
           $resolver_tab = "viewit";
           $itemtitle = $citation->metadata->article_title;
         }
+        echo "<td>\n";
+        if ($citation->public_note == "") {
+          $order = "9999";
+        } else {
+          $order = $citation->public_note ;
+        }
+        echo $order . "\n";
+        echo "</td>\n";
         echo "<td>\n";
         echo "<div class=\"iteminfo\"><div>Title: <a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
           echo urlencode($itemtitle) . "&rft.genre=";
@@ -115,14 +128,6 @@ foreach ($xml->reading_lists->children() as $reading_list) {
         if ($citation->type == "CR" || $citation->type == "E_CR") {
           echo $citation->metadata->pages . "\n";
         }
-        echo "</td>\n";
-        echo "<td>\n";
-        if ($citation->public_note == "") {
-          $order = "9999";
-        } else {
-          $order = $citation->public_note ;
-        }
-        echo $order . "\n";
         echo "</td>\n";
         echo "</tr>\n";
       }
