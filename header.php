@@ -19,6 +19,7 @@ date_default_timezone_set('America/Los_Angeles');
       iframe.visible {display: block; width: 100%; max-height: 100%; min-height: 250px; border: 1px solid #ddd;padding: 0 20px;}
       .reading-lists-wrapper {margin: 0 7.5% 30px 30px;}
       .header-row .bg-info {margin-top: 10px; padding: 6px 12px;}
+      div.dataTables_wrapper div.dataTables_filter {text-align: left;}
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -29,7 +30,7 @@ date_default_timezone_set('America/Los_Angeles');
         $("#coursesTable").dataTable({
           "order": [[ 0, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
-          "dom": "<'row header-row'<'col-sm-4'f>'<'col-sm-4'i><'col-sm-4'<'pull-right'lB>>>" +
+          "dom": "<'row header-row'<'col-sm-3'f><'col-sm-5'i><'col-sm-2'><'col-sm-2'<'pull-right'B>>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-9'i><'col-sm-3'p>>",
           "buttons": ['excel', 'print']
