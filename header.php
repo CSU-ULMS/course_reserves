@@ -12,7 +12,7 @@ date_default_timezone_set('America/Los_Angeles');
     <meta name="author" content="">
     <title>Course Reserves</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-yxFy3Tt84CcGRj9UI7RA25hoUMpUPoFzcdPtK3hBdNgEGnh9FdKgMVM+lbAZTKN2" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="js/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.12,b-1.2.0,b-html5-1.2.0,b-print-1.2.0,fc-3.2.2,fh-3.1.2,r-2.1.0,sc-1.4.2,se-1.2.0/datatables.min.css"/>
      
     <style type="text/css">
       iframe {display: none;}
@@ -22,7 +22,7 @@ date_default_timezone_set('America/Los_Angeles');
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/u/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.12,b-1.2.1,b-html5-1.2.1,b-print-1.2.1,fc-3.2.2,fh-3.1.2,r-2.1.0,sc-1.4.2,se-1.2.0/datatables.min.js"></script>
+    <script type="text/javascript" src="js/datatables.min.js"></script>
     <script type="text/javascript" src="iframe-resizer/src/iframeResizer.js"></script>
     <script>
       $(document).ready(function() { 
