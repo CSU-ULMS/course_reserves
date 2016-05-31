@@ -1,0 +1,3 @@
+[submodule "iframe-resizer"]
+	path = iframe-resizer
+	url = https://github.com/davidjbradshaw/iframe-resizer
