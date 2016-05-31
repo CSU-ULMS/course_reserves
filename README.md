@@ -1,7 +1,5 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
 * This repository is for the alternate Primo Courses Reserves UI.
@@ -14,13 +12,10 @@ This README would normally document whatever steps are necessary to get your app
 1. Change permissions for courses_body.php to grant write permissions to webserver user. For us, we changed the owner to apache (username for apache webserver) and gave permissions of 664.
 1. Add update_course_list.php to cron and schedule for appropriate update interval.
 
-### Contribution guidelines ###
+### Development Preview ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* http://lib2.csusm.edu/reserves
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Please contact ichan@csusm.edu if you have questions or feedback.
