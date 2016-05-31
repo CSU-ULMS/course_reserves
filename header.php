@@ -33,7 +33,6 @@ date_default_timezone_set('America/Los_Angeles');
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-9'i><'col-sm-3'p>>",
           "buttons": ['excel', 'print']
-          "dom": '<"top"lif>rt<"bottom"p>'
         }); 
         $("#citationsTable").dataTable({
           "order": [[ 0, "asc" ], [ 1, "asc" ]],
