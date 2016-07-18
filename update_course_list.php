@@ -3,7 +3,7 @@ require("config.php");
 $coursesheader = new DOMDocument();
 $coursesheader->loadXML("<coursesheaderdata/>");
 $chrxml = $coursesheader->createDocumentFragment();
-$queryParamSpecs = urlencode('limit') . '=' . urlencode('limitNum') . '&' . urlencode('offset') . '=' . urlencode('offSetNum') . '&' . urlencode('order_by') . '=' . urlencode('name') . '&' . urlencode('direction') . '=' . urlencode('ASC') . '&';
+$queryParamSpecs = '?' . urlencode('limit') . '=' . urlencode('limitNum') . '&' . urlencode('offset') . '=' . urlencode('offSetNum') . '&' . urlencode('order_by') . '=' . urlencode('name') . '&' . urlencode('direction') . '=' . urlencode('ASC') . '&';
 
 $chrresponse = apiconnect(0, "", $queryParamSpecs, $apiurl, $apikey, 1);
 
@@ -89,16 +89,22 @@ function getcoursedata($file, $offset, $queryParamSpecs, $apiurl, $apikey){
 	foreach($xml->course as $course)
 	{
 		if (strtolower($course->status) == "active"){
-
-			$courseListTableEntries .= "<tr>\n<td>\n";
-			$courseListTableEntries .=  "<a target=\"_blank\" href=\"course_readings.php?cid=" . $course->id . "\">";
-			$courseListTableEntries .=  $course->name;
-			$courseListTableEntries .=  "</a></td>\n<td>";
-	    if ($course->instructors[0]->instructor->last_name != ""){
-	    	$courseListTableEntries .= $course->instructors[0]->instructor->last_name . ", " . $course->instructors[0]->instructor->first_name;
-	    }
-	    $courseListTableEntries .= "</td></tr>\n";
-
+      $queryParamSpecs = $course->id . "/reading-lists/?";
+      $rlist_data = apiconnect($offset, $apiSpec, $queryParamSpecs, $apiurl, $apikey);
+      $readinglistxml = simplexml_load_string($rlist_data);
+      foreach($readinglistxml->reading_list as $reading_list) {
+        if ($reading_list->status == "Complete") {
+          $courseListTableEntries .= "<tr>\n<td>\n";
+          $courseListTableEntries .=  "<a target=\"_blank\" href=\"course_readings.php?cid=" . $course->id . "\">";
+          $courseListTableEntries .=  $course->name;
+          $courseListTableEntries .=  "</a></td>\n<td>";
+          if ($course->instructors[0]->instructor->last_name != ""){
+            $courseListTableEntries .= $course->instructors[0]->instructor->last_name . ", " . $course->instructors[0]->instructor->first_name;
+          }
+          $courseListTableEntries .= "</td></tr>\n";
+          break;    
+        }
+      }
 		}
 	}
 
@@ -116,7 +122,7 @@ function apiconnect($offset, $apiSpec = "", $queryParamSpecs = "", $apiurl, $api
   }
 
 	$apiurl = $apiurl . $apiSpec;
-	$queryParams = '?' . $queryParamSpecs . urlencode('apikey') . '=' . $apikey;
+	$queryParams = $queryParamSpecs . urlencode('apikey') . '=' . $apikey;
 	curl_setopt($ch, CURLOPT_URL, $apiurl . $queryParams);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($ch, CURLOPT_HEADER, FALSE);
