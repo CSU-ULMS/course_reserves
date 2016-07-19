@@ -1,6 +1,3 @@
-<?php
-date_default_timezone_set('America/Los_Angeles');
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,15 +67,14 @@ date_default_timezone_set('America/Los_Angeles');
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Course Reserves</a>
+            <a class="navbar-brand" href="/reserves">Course Reserves</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
             <li><a href="http://biblio.csusm.edu/">Library Home Page</a></li>
-            <li><a href="https://na01.alma.exlibrisgroup.com/institution/01CALS_USM">Alma</a></li>
-            <li><a href="http://primo-pmtna01.hosted.exlibrisgroup.com/primo_library/libweb/action/search.do?mode=Basic&vid=CALS_USM&tab=cals_usm_cr&">Reserves</a></li>
+            <li><a href="/reserves">Reserves</a></li>
             <li><a href="https://lib.csusm.edu/helpdesk/">Library Technology Support</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
