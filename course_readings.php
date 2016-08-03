@@ -20,6 +20,7 @@ curl_close($ch);
 $xml = new SimpleXMLElement($response);
 
 include("header.php");
+echo "<div class=\"row\">\n";
   echo "<div class=\"col-sm-11 col-sm-offset-1\">\n";
     echo "<div class=\"page-header\">\n";
       echo "<h1 class=\"page-title\">" . $xml->name . "</h1>\n";
@@ -27,117 +28,92 @@ include("header.php");
   echo "</div>\n";
 echo "</div>\n";
 echo "<div class=\"row\">\n";
-  echo "<div class=\"col-sm-3 col-sm-offset-1\">\n";
-    echo "<div class=\"panel panel-default\">\n";
-      echo "<div class=\"panel-heading\"><h3 class=\"panel-title\">Course Information</h3></div>\n";
-        echo "<table class=\"table table-bordered\">\n";
-        echo "<tr>\n<th>Instructor</th>\n<td>\n";
-        echo $xml->instructors->instructor[0]->first_name . " ";
-        echo $xml->instructors->instructor[0]->last_name . "\n";
-        echo "</td>\n<tr>\n";
-        echo "<tr>\n<th>Department</th>\n<td>\n";
-        echo $xml->academic_department . "\n";
-        echo "</td>\n<tr>\n";
-        echo "<tr>\n<th>Terms</th>\n<td>\n";
-        if (isset($xml->terms)) {
-          foreach ($xml->terms->children() as $term) {
-            echo ucwords(strtolower($term)) . " / \n";
-          } 
-        }
-        echo "</td>\n";
-        echo "<tr>\n";
-        echo "</table>\n";
-      echo "</div>\n";
-    echo "</div>\n";
-    echo "<div class=\"col-sm-8\">\n";
-      echo "<div class=\"reading-lists-wrapper\">\n";
-        foreach ($xml->reading_lists->children() as $reading_list) {
-          if ($reading_list->status['desc'] != "Inactive") {
-            echo "<div class=\"row\">\n";
-            echo "<h3>Reading Lists for this Course</div>\n";
-            //echo "<h4>Reading List Name: " . $reading_list->name . "</h4>\n";
-            echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
-            echo "<thead>\n";
-            echo "<tr>\n";
-            echo "<th>Reading Order</th>\n";
-            echo "<th>Title</th>\n";
-            echo "<th>Author</th>\n";
-            echo "<th>Call Number</th>\n";
-            echo "<th>Pages</th>\n";
-            echo "</tr>\n";
-            echo "</thead>\n";
-            echo "<tbody>\n";
-            foreach ($reading_list->citations->citation as $citation) {
-              if ($citation->status == "Complete" || $citation->status == "BeingPrepared") {
-                echo "<tr>\n";
-                if ($citation->type == "BK") {
-                  $genre = "book";
-                  $resolver_tab = "getit";
-                  $itemtitle = $citation->metadata->title;
-                } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
-                  $genre = "article";
-                  $resolver_tab = "viewit";
-                  $itemtitle = $citation->metadata->article_title;
-                }
-                echo "<td>\n";
-                if ($citation->public_note == "") {
-                  $order = "<span class=\"hidden\">9999</span>";
-                } else {
-                  $order = $citation->public_note ;
-                }
-                echo $order . "\n";
-                echo "</td>\n";
-                echo "<td>\n";
-                echo "<div class=\"iteminfo\"><div>Title: <a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
-                  echo urlencode($itemtitle) . "&rft.genre=";
-                  echo urlencode($genre) . "&rft.mms_id=";
-                  echo $citation->metadata->mms_id . "&rft.au=";
-                  echo urlencode($citation->metadata->author) . "&rft.title=";
-                  echo urlencode($itemtitle) . "&customer=1670&rft_dat=language=eng,view=cals_usm_services_page&svc_dat=";
-                  echo $resolver_tab . "&svc.profile=";
-                  echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\">\n";
-                  echo $itemtitle . "</a></div>\n";
-                if ($citation->type == "BK") {
-                  echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
-                  echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
-                } 
-                echo "<div>Status: " . $citation->status['desc'] . "</div>\n";
-                echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
-                echo "<iframe src=\"\"></iframe></div>";
-                echo "</td>\n";
-                echo "<td>\n";
-                echo $citation->metadata->author . "\n";
-                echo "</td>\n";
-                echo "<td>\n";
-                if ($citation->type == "BK") {
-                  echo $citation->metadata->call_number ."\n";
-                }
-                echo "</td>\n";
-                echo "<td>\n";
-                if ($citation->type == "CR" || $citation->type == "E_CR") {
-                  echo $citation->metadata->pages . "\n";
-                }
-                echo "</td>\n";
-                echo "</tr>\n";
+  echo "<div class=\"col-sm-12\">\n";
+    echo "<p>\n";
+      echo $xml->instructors->instructor[0]->first_name . " ";
+      echo $xml->instructors->instructor[0]->last_name;
+    echo "</p>\n";
+    echo "<div class=\"reading-lists-wrapper\">\n";
+      foreach ($xml->reading_lists->children() as $reading_list) {
+        if ($reading_list->status['desc'] != "Inactive") {
+          echo "<div class=\"row\">\n";
+          echo "<h3>Reading Lists for this Course</div>\n";
+          //echo "<h4>Reading List Name: " . $reading_list->name . "</h4>\n";
+          echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
+          echo "<thead>\n";
+          echo "<tr>\n";
+          echo "<th>Reading Order</th>\n";
+          echo "<th>Title</th>\n";
+          echo "<th>Author</th>\n";
+          echo "<th>Call Number</th>\n";
+          echo "</tr>\n";
+          echo "</thead>\n";
+          echo "<tbody>\n";
+          foreach ($reading_list->citations->citation as $citation) {
+            if ($citation->status == "Complete" || $citation->status == "BeingPrepared") {
+              echo "<tr>\n";
+              if ($citation->type == "BK") {
+                $genre = "book";
+                $resolver_tab = "getit";
+                $itemtitle = $citation->metadata->title;
+              } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
+                $genre = "article";
+                $resolver_tab = "viewit";
+                $itemtitle = $citation->metadata->article_title;
               }
-            }              
-            echo "</tbody>\n";
-            echo "</table>\n";
-            echo "</div>\n";
-          }
+              echo "<td>\n";
+              if ($citation->public_note == "") {
+                $order = "<span class=\"hidden\">9999</span>";
+              } else {
+                $order = $citation->public_note ;
+              }
+              echo $order . "\n";
+              echo "</td>\n";
+              echo "<td>\n";
+              echo "<div class=\"iteminfo\"><div>Title: <a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
+                echo urlencode($itemtitle) . "&rft.genre=";
+                echo urlencode($genre) . "&rft.mms_id=";
+                echo $citation->metadata->mms_id . "&rft.au=";
+                echo urlencode($citation->metadata->author) . "&rft.title=";
+                echo urlencode($itemtitle) . "&customer=1670&rft_dat=language=eng,view=cals_usm_services_page&svc_dat=";
+                echo $resolver_tab . "&svc.profile=";
+                echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\">\n";
+                echo $itemtitle . "</a></div>\n";
+              if ($citation->type == "BK") {
+                echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
+                echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
+              } 
+              echo "<div>Status: " . $citation->status['desc'] . "</div>\n";
+              echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
+              echo "<iframe src=\"\"></iframe></div>";
+              echo "</td>\n";
+              echo "<td>\n";
+              echo $citation->metadata->author . "\n";
+              echo "</td>\n";
+              echo "<td>\n";
+              if ($citation->type == "BK") {
+                echo $citation->metadata->call_number ."\n";
+              }
+              echo "</td>\n";
+              echo "</tr>\n";
+            }
+          }              
+          echo "</tbody>\n";
+          echo "</table>\n";
+          echo "</div>\n";
         }
-        echo "</div>\n";
-        echo "<div class=\"hidden\">Course Status: " . ucfirst(strtolower($xml->status)) . "</div>\n";
-        echo "<div class=\"hidden\">Course Processing Department: " . $xml->processing_department['desc'] . "</div>\n";
-        echo "<div class=\"hidden\">Course Start Date: " . $xml->start_date . "</div>\n";
-        echo "<div class=\"hidden\">Course End Date: " . $xml->end_date . "</div>\n";
-        echo "<div class=\"hidden\">Course Code: " . $xml->code . "</div>\n";
-        echo "<div class=\"hidden\">Course Alma ID: " . $xml->id . "</div>\n";
-        echo "<div class=\"hidden\">Reading List Status: " . $reading_list->status['desc'] . "</div>\n";
-        echo "<div class=\"hidden\">Reading List Code: " . $reading_list->code . "</div>\n";
-        echo "<div class=\"hidden\">Reading List Alma ID: " . $reading_list->id . "</div>\n";
-
+      }
       echo "</div>\n";
+      echo "<div class=\"hidden\">Course Status: " . ucfirst(strtolower($xml->status)) . "</div>\n";
+      echo "<div class=\"hidden\">Course Processing Department: " . $xml->processing_department['desc'] . "</div>\n";
+      echo "<div class=\"hidden\">Course Start Date: " . $xml->start_date . "</div>\n";
+      echo "<div class=\"hidden\">Course End Date: " . $xml->end_date . "</div>\n";
+      echo "<div class=\"hidden\">Course Code: " . $xml->code . "</div>\n";
+      echo "<div class=\"hidden\">Course Alma ID: " . $xml->id . "</div>\n";
+      echo "<div class=\"hidden\">Reading List Status: " . $reading_list->status['desc'] . "</div>\n";
+      echo "<div class=\"hidden\">Reading List Code: " . $reading_list->code . "</div>\n";
+      echo "<div class=\"hidden\">Reading List Alma ID: " . $reading_list->id . "</div>\n";
     echo "</div>\n";
-
+  echo "</div>\n";
+echo "</div>\n";
 include("footer.php");
