@@ -21,7 +21,7 @@ $xml = new SimpleXMLElement($response);
 
 include("header.php");
 echo "<div class=\"row\">\n";
-  echo "<div class=\"col-sm-11 col-sm-offset-1\">\n";
+  echo "<div class=\"col-sm-12\">\n";
     echo "<div class=\"page-header\">\n";
       echo "<h1 class=\"page-title\">" . $xml->name . "</h1>\n";
     echo "</div>\n";
@@ -42,10 +42,9 @@ echo "<div class=\"row\">\n";
           echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
           echo "<thead>\n";
           echo "<tr>\n";
-          echo "<th>Reading Order</th>\n";
-          echo "<th>Title</th>\n";
-          echo "<th>Author</th>\n";
-          echo "<th>Call Number</th>\n";
+          echo "<th class='reading-order-col'>Reading Order</th>\n";
+          echo "<th class='item-title-col'>Title</th>\n";
+          echo "<th class='author-col'>Author</th>\n";
           echo "</tr>\n";
           echo "</thead>\n";
           echo "<tbody>\n";
@@ -70,7 +69,7 @@ echo "<div class=\"row\">\n";
               echo $order . "\n";
               echo "</td>\n";
               echo "<td>\n";
-              echo "<div class=\"iteminfo\"><div>Title: <a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
+              echo "<div class=\"iteminfo\"><div><a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
                 echo urlencode($itemtitle) . "&rft.genre=";
                 echo urlencode($genre) . "&rft.mms_id=";
                 echo $citation->metadata->mms_id . "&rft.au=";
@@ -83,17 +82,12 @@ echo "<div class=\"row\">\n";
                 echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
                 echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
               } 
-              echo "<div>Status: " . $citation->status['desc'] . "</div>\n";
+              echo "<div class=\"hidden\">Status: " . $citation->status['desc'] . "</div>\n";
               echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
               echo "<iframe src=\"\"></iframe></div>";
               echo "</td>\n";
               echo "<td>\n";
               echo $citation->metadata->author . "\n";
-              echo "</td>\n";
-              echo "<td>\n";
-              if ($citation->type == "BK") {
-                echo $citation->metadata->call_number ."\n";
-              }
               echo "</td>\n";
               echo "</tr>\n";
             }

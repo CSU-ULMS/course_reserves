@@ -95,7 +95,7 @@ function getcoursedata($file, $offset, $queryParamSpecs, $apiurl, $apikey){
       foreach($readinglistxml->reading_list as $reading_list) {
         if ($reading_list->status == "Complete") {
           $courseListTableEntries .= "<tr>\n<td>\n";
-          $courseListTableEntries .=  "<a target=\"_blank\" href=\"course_readings.php?cid=" . $course->id . "\">";
+          $courseListTableEntries .=  "<a href=\"course_readings.php?cid=" . $course->id . "\">";
           $courseListTableEntries .=  $course->name;
           $courseListTableEntries .=  "</a></td>\n<td>";
           if ($course->instructors[0]->instructor->last_name != ""){

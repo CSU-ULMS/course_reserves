@@ -17,6 +17,15 @@
       .reading-lists-wrapper {margin: 0 7.5% 30px 30px;}
       .header-row .bg-info {margin-top: 10px; padding: 6px 12px;}
       div.dataTables_wrapper div.dataTables_filter {text-align: left;}
+      .reading-order-col{
+        width: 8%;
+      }
+      .item-title-col {
+        width: 75%;
+      }
+      .author-col {
+        width: 17%;
+      }
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -81,4 +90,4 @@
         </div><!-- /.container-fluid -->
       </nav>
     </div>
-    <div class="container-fluid">
+    <div class="container">
