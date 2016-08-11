@@ -13,9 +13,9 @@ include("header.php");
         Media
       </a> <br />
       <a href="https://biblio.csusm.edu/policies/faculty-reserve-guidelines">Faculty Reserve Guidelines</a>
+      <p><br/><a href="https://biblio.csusm.edu/reserves-faq-for-students">Reserves FAQ for students</a></p>
     </div>
     <h1>Find Reserves by Course and Instructor</h1>
-    <p><br/><a href="https://biblio.csusm.edu/reserves-faq-for-students">Reserves FAQ for students</a></p>
     <table class="table" id="coursesTable">
       <thead>
       <tr>

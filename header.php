@@ -10,22 +10,18 @@
     <title>Course Reserves</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-yxFy3Tt84CcGRj9UI7RA25hoUMpUPoFzcdPtK3hBdNgEGnh9FdKgMVM+lbAZTKN2" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
-     
     <style type="text/css">
-      iframe {display: none;}
-      iframe.visible {display: block; width: 100%; max-height: 100%; min-height: 250px; border: 1px solid #ddd;padding: 0 20px;}
+      #coursesTable_wrapper .header-row{margin-top:55px}
+      #coursesTable_filter{margin-top: 6px}
+      #coursesTable_filter label{font-size:15px}
+      iframe{display:none}
+      iframe.visible{display:block;width:100%; max-height: 100%; min-height: 250px; border: 1px solid #ddd;padding: 0 20px;}
       .reading-lists-wrapper {margin: 0 7.5% 30px 30px;}
       .header-row .bg-info {margin-top: 10px; padding: 6px 12px;}
       div.dataTables_wrapper div.dataTables_filter {text-align: left;}
-      .reading-order-col{
-        width: 8%;
-      }
-      .item-title-col {
-        width: 75%;
-      }
-      .author-col {
-        width: 17%;
-      }
+      .reading-order-col{width: 8%;}
+      .item-title-col{width: 75%;}
+      .author-col {width: 17%;}
     </style>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -36,18 +32,19 @@
         $("#coursesTable").dataTable({
           "order": [[ 0, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
-          "dom": "<'row header-row'<'col-sm-3'f><'col-sm-5'i><'col-sm-2'><'col-sm-2'<'pull-right'B>>>" +
+          "dom": "<'row header-row'<'col-sm-5'f><'col-sm-4'i><'col-sm-1'><'col-sm-2'<'pull-right'>>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-9'i><'col-sm-3'p>>",
-          "buttons": ['excel', 'print']
+          "oLanguage": {
+            "sSearch": "Enter Course and Instructor:"
+          }
         }); 
         $("#citationsTable").dataTable({
           "order": [[ 0, "asc" ], [ 1, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
           "dom": "<'row header-row'<'col-sm-9'<i>><'col-sm-3'<'pull-right'B>>>" +
           "<'row'<'col-sm-12'tr>>" +
-          "<'row'<'col-sm-9'i><'col-sm-3'>>",
-          "buttons": ['excel', 'print']
+          "<'row'<'col-sm-9'i><'col-sm-3'>>"
         }); 
         $('iframe.visible').iFrameResize({"checkOrigin": false});
         $("a.getinfo").click(function(e) {
