@@ -42,7 +42,7 @@
         $("#citationsTable").dataTable({
           "order": [[ 0, "asc" ], [ 1, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
-          "dom": "<'row header-row'<'col-sm-9'<i>><'col-sm-3'<'pull-right'B>>>" +
+          "dom": "<'row header-row'<'col-sm-9'<i>><'col-sm-3'<'pull-right'>>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-9'i><'col-sm-3'>>"
         }); 
