@@ -39,7 +39,7 @@ echo "<div class=\"row\">\n";
           echo "<div class=\"row\">\n";
           echo "<h3>Reading Lists for this Course</div>\n";
           //echo "<h4>Reading List Name: " . $reading_list->name . "</h4>\n";
-          echo "<table class=\"table table-bordered\" id=\"citationsTable\">\n";
+          echo "<table class=\"table\" id=\"citationsTable\">\n";
           echo "<thead>\n";
           echo "<tr>\n";
           echo "<th class='reading-order-col'>Reading Order</th>\n";
