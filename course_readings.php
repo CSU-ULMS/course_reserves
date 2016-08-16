@@ -98,10 +98,10 @@ echo "<div class=\"row\">\n";
                 echo $resolver_tab . "&svc.profile=";
                 echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\">\n";
                 echo $itemtitle . "</a></div>\n";
-              if ($citation->type == "BK") {
-                echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
-                echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
-              } 
+              //if ($citation->type == "BK") {
+                //echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
+                //echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
+              //} 
               echo "<div class=\"hidden\">Status: " . $citation->status['desc'] . "</div>\n";
               echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
               echo "<iframe src=\"\"></iframe></div>";
