@@ -14,6 +14,22 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 $response = curl_exec($ch);
 curl_close($ch);
 
+function bibLookup($mmsID) {
+  $ch = curl_init();
+  $url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/{mms_id}';
+  $templateParamNames = array('{mms_id}');
+  $templateParamValues = array($mmsID);
+  $url = str_replace($templateParamNames, $templateParamValues, $url);
+  $queryParams = '?' . urlencode('view') . '=' . urlencode('brief') . '&' . urlencode('expand') . '=' . urlencode('p_avail') . '&' . urlencode('apikey') . '=' . urlencode('l7xx43a08472cc9349ddb652140de10b9279');
+  curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  return($response);
+}
 //$responsedata = substr($response, strpos($response, '?'.'>') + 2);
 //$f->appendXML($responsedata);
 //$coursedata->documentElement->appendChild($f);
@@ -52,9 +68,13 @@ echo "<div class=\"row\">\n";
             if ($citation->status == "Complete" || $citation->status == "BeingPrepared") {
               echo "<tr>\n";
               if ($citation->type == "BK") {
+                $bibData = bibLookup($citation->metadata->mms_id);
+                $bibxml = new SimpleXMLElement($bibData);
+                //print_r($bibxml);
                 $genre = "book";
                 $resolver_tab = "getit";
-                $itemtitle = $citation->metadata->title;
+                $itemtitle = $bibxml->title;
+                $bookAuthor = $bibxml->author;
               } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
                 $genre = "article";
                 $resolver_tab = "viewit";
@@ -87,7 +107,11 @@ echo "<div class=\"row\">\n";
               echo "<iframe src=\"\"></iframe></div>";
               echo "</td>\n";
               echo "<td>\n";
-              echo $citation->metadata->author . "\n";
+              if ($citation->type == "BK") {
+                echo $bookAuthor . "\n";
+              } else {
+                echo $citation->metadata->author . "\n";
+              }
               echo "</td>\n";
               echo "</tr>\n";
             }
