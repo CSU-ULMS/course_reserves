@@ -68,13 +68,17 @@ echo "<div class=\"row\">\n";
             if ($citation->status == "Complete" || $citation->status == "BeingPrepared") {
               echo "<tr>\n";
               if ($citation->type == "BK") {
-                $bibData = bibLookup($citation->metadata->mms_id);
-                $bibxml = new SimpleXMLElement($bibData);
+                if ($citation->metadata->title != "") {
+                  $itemtitle = $citation->metadata->title;
+                } else {
+                  $bibData = bibLookup($citation->metadata->mms_id);
+                  $bibxml = new SimpleXMLElement($bibData);
+                  $itemtitle = $bibxml->title;
+                  $bookAuthor = $bibxml->author;
+                }
                 //print_r($bibxml);
                 $genre = "book";
                 $resolver_tab = "getit";
-                $itemtitle = $bibxml->title;
-                $bookAuthor = $bibxml->author;
               } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
                 $genre = "article";
                 $resolver_tab = "viewit";
