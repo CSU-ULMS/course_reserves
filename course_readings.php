@@ -70,6 +70,7 @@ echo "<div class=\"row\">\n";
               if ($citation->type == "BK") {
                 if ($citation->metadata->title != "") {
                   $itemtitle = $citation->metadata->title;
+                  $bookAuthor = $citation->metadata->author;
                 } else {
                   $bibData = bibLookup($citation->metadata->mms_id);
                   $bibxml = new SimpleXMLElement($bibData);
@@ -82,7 +83,20 @@ echo "<div class=\"row\">\n";
               } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
                 $genre = "article";
                 $resolver_tab = "viewit";
-                $itemtitle = $citation->metadata->article_title;
+                if ($citation->metadata->article_title != "") {
+                  $itemtitle = $citation->metadata->article_title;
+                } else {
+                  $itemtitle = "";
+                }
+                if ($citation->metadata->journal_title != "") {
+                  $journaltitle = $citation->metadata->journal_title;
+                  if ($citation->metadata->article_title == "") {
+                    $itemtitle = $citation->metadata->journal_title;
+                    $journaltitle = "";
+                  }
+                } else {
+                  $journaltitle = "";
+                }
               }
               echo "<td>\n";
               if ($citation->public_note == "") {
