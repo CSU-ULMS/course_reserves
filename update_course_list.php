@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Los_Angeles');
 require("config.php");
 $coursesheader = new DOMDocument();
 $coursesheader->loadXML("<coursesheaderdata/>");
@@ -15,7 +16,7 @@ $totcount = $chrxml2->courses[0]['total_record_count'];
 $topnum = intval($totcount/100);
 $x = 0; 
 
-$file = "courses_body.php";
+$file = "courses_body_temp.php";
 $handle = fopen($file, 'w') or die("can't open file");
 fwrite($handle, "");
 fclose($handle);
@@ -27,10 +28,9 @@ while($x <= $topnum) {
 } 
 $handle = fopen($file, 'a') or die("can't open file");
 fwrite($handle, "</tbody></table>");
-fwrite($handle, "<div>" . date("Y-m-d H:i:s") . "</div>");
+fwrite($handle, "<div>Updated: " . date("Y-m-d H:i:s") . "</div>");
 fclose($handle);
-
-date_default_timezone_set('America/Los_Angeles');
+copy("courses_body_temp.php","courses_body.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +110,6 @@ function getcoursedata($file, $offset, $queryParamSpecs, $apiurl, $apikey){
 
 	fwrite($handle, $courseListTableEntries);
 	fclose($handle);
-
 }
 
 function apiconnect($offset, $apiSpec = "", $queryParamSpecs = "", $apiurl, $apikey, $queryLimit = 100){

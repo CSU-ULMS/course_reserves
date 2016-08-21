@@ -42,9 +42,12 @@
         $("#citationsTable").dataTable({
           "order": [[ 0, "asc" ], [ 1, "asc" ]],
           "lengthMenu": [[-1, 25, 50], ["All", 25, 50]],
-          "dom": "<'row header-row'<'col-sm-9'<i>><'col-sm-3'<'pull-right'>>>" +
+          "dom": "<'row header-row'<'col-sm-5'f><'col-sm-4'i><'col-sm-1'><'col-sm-2'<'pull-right'>>>" +
           "<'row'<'col-sm-12'tr>>" +
-          "<'row'<'col-sm-9'i><'col-sm-3'>>"
+          "<'row'<'col-sm-9'i><'col-sm-3'>>",
+          "oLanguage": {
+            "sSearch": "Enter Title or Author:"
+          }
         }); 
         $('iframe.visible').iFrameResize({"checkOrigin": false});
         $("a.getinfo").click(function(e) {
