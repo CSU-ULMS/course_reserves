@@ -97,10 +97,9 @@ echo "<div class=\"row\">\n";
                   $journaltitle = "";
                 }
               }
-              if ($suppress ="true") {
+              if ($suppress != "true") {
                 echo "<tr>\n";
                 echo "<td>\n";
-                print_r($citation);
                 if ($citation->public_note == "") {
                   $order = "<span class=\"hidden\">9999</span>";
                 } else {
