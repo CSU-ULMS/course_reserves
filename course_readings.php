@@ -65,19 +65,18 @@ echo "<div class=\"row\">\n";
           echo "</thead>\n";
           echo "<tbody>\n";
           foreach ($reading_list->citations->citation as $citation) {
+            $suppress = "";
             if ($citation->status == "Complete" || $citation->status == "BeingPrepared") {
-              echo "<tr>\n";
               if ($citation->type == "BK") {
+                $bibData = bibLookup($citation->metadata->mms_id);
+                $bibxml = new SimpleXMLElement($bibData);
+                $itemtitle = $bibxml->title;
+                $bookAuthor = $bibxml->author;
+                $suppress = $bibxml->suppress_from_publishing;
                 if ($citation->metadata->title != "") {
                   $itemtitle = $citation->metadata->title;
                   $bookAuthor = $citation->metadata->author;
-                } else {
-                  $bibData = bibLookup($citation->metadata->mms_id);
-                  $bibxml = new SimpleXMLElement($bibData);
-                  $itemtitle = $bibxml->title;
-                  $bookAuthor = $bibxml->author;
                 }
-                //print_r($bibxml);
                 $genre = "book";
                 $resolver_tab = "getit";
               } elseif ($citation->type == "CR" || $citation->type == "E_CR") {
@@ -98,40 +97,44 @@ echo "<div class=\"row\">\n";
                   $journaltitle = "";
                 }
               }
-              echo "<td>\n";
-              if ($citation->public_note == "") {
-                $order = "<span class=\"hidden\">9999</span>";
-              } else {
-                $order = $citation->public_note ;
+              if ($suppress ="true") {
+                echo "<tr>\n";
+                echo "<td>\n";
+                print_r($citation);
+                if ($citation->public_note == "") {
+                  $order = "<span class=\"hidden\">9999</span>";
+                } else {
+                  $order = $citation->public_note ;
+                }
+                echo $order . "\n";
+                echo "</td>\n";
+                echo "<td>\n";
+                echo "<div class=\"iteminfo\"><div><a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
+                  echo urlencode($itemtitle) . "&rft.genre=";
+                  echo urlencode($genre) . "&rft.mms_id=";
+                  echo $citation->metadata->mms_id . "&rft.au=";
+                  echo urlencode($citation->metadata->author) . "&rft.title=";
+                  echo urlencode($itemtitle) . "&customer=1670&rft_dat=language=eng,view=cals_usm_services_page&svc_dat=";
+                  echo $resolver_tab . "&svc.profile=";
+                  echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\">\n";
+                  echo $itemtitle . "</a></div>\n";
+                //if ($citation->type == "BK") {
+                  //echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
+                  //echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
+                //} 
+                echo "<div class=\"hidden\">Status: " . $citation->status['desc'] . "</div>\n";
+                echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
+                echo "<iframe src=\"\"></iframe></div>";
+                echo "</td>\n";
+                echo "<td>\n";
+                if ($citation->type == "BK") {
+                  echo $bookAuthor . "\n";
+                } else {
+                  echo $citation->metadata->author . "\n";
+                }
+                echo "</td>\n";
+                echo "</tr>\n";
               }
-              echo $order . "\n";
-              echo "</td>\n";
-              echo "<td>\n";
-              echo "<div class=\"iteminfo\"><div><a class=\"getinfo\" href=\"https://na01.alma.exlibrisgroup.com/view/uresolver/01CALS_USM/openurl?ctx_enc=info:ofi/enc:UTF-8&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&url_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-&response_type=xml&isSerivcesPage=true&rft.btitle=";
-                echo urlencode($itemtitle) . "&rft.genre=";
-                echo urlencode($genre) . "&rft.mms_id=";
-                echo $citation->metadata->mms_id . "&rft.au=";
-                echo urlencode($citation->metadata->author) . "&rft.title=";
-                echo urlencode($itemtitle) . "&customer=1670&rft_dat=language=eng,view=cals_usm_services_page&svc_dat=";
-                echo $resolver_tab . "&svc.profile=";
-                echo $resolver_tab . "&env_type=test&req.skin=csusm_uresolver\">\n";
-                echo $itemtitle . "</a></div>\n";
-              //if ($citation->type == "BK") {
-                //echo "<div>Publisher: " . $citation->metadata->publisher . "</div>\n";
-                //echo "<div>Publication Date: " . $citation->metadata->publication_date . "</div>\n";
-              //} 
-              echo "<div class=\"hidden\">Status: " . $citation->status['desc'] . "</div>\n";
-              echo "<div class=\"hidden\">Citation ID: " . $citation->id . "</div>\n";
-              echo "<iframe src=\"\"></iframe></div>";
-              echo "</td>\n";
-              echo "<td>\n";
-              if ($citation->type == "BK") {
-                echo $bookAuthor . "\n";
-              } else {
-                echo $citation->metadata->author . "\n";
-              }
-              echo "</td>\n";
-              echo "</tr>\n";
             }
           }              
           echo "</tbody>\n";
