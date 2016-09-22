@@ -29,7 +29,7 @@ include("header.php");
       </tr>
     </thead>
     <tbody>
-      <?php include("courses_body.php"); ?>
+      <?php include("updates/courses_body.php"); ?>
   </div>
 </div>
 <?php
